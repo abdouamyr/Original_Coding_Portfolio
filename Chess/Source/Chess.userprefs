@@ -1,0 +1,22 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/turnTracker.cs">
+    <Files>
+      <File FileName="Assets/Pieces/Movement Scripts/kingMovement.cs" Line="96" Column="3" />
+      <File FileName="Assets/Pieces/Movement Scripts/blackPawnMovement.cs" Line="65" Column="32" />
+      <File FileName="Assets/Pieces/Movement Scripts/queenMovement.cs" Line="92" Column="28" />
+      <File FileName="Assets/Pieces/Movement Scripts/bishopMovement.cs" Line="76" Column="2" />
+      <File FileName="Assets/Pieces/Movement Scripts/whitePawnMovement.cs" Line="59" Column="32" />
+      <File FileName="Assets/Pieces/Movement Scripts/rookMovement.cs" Line="78" Column="32" />
+      <File FileName="Assets/Pieces/Movement Scripts/knightMovement.cs" Line="148" Column="72" />
+      <File FileName="Assets/Tiles/Board Scripts/positionScript.cs" Line="40" Column="63" />
+      <File FileName="Assets/Tiles/Board Scripts/alphaMovementScript.cs" Line="64" Column="4" />
+      <File FileName="Assets/turnTracker.cs" Line="53" Column="36" />
+      <File FileName="Assets/Pieces/Movement Scripts/alphaUpgradeSelector.cs" Line="37" Column="35" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

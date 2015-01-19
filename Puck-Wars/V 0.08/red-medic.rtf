@@ -1,0 +1,71 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1343\cocoasubrtf160
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red63\green127\blue95;\red204\green122\blue122;\red127\green0\blue85;
+\red204\green176\blue122;\red42\green0\blue255;\red122\green204\blue122;\red122\green204\blue176;\red122\green176\blue204;
+\red122\green122\blue204;\red63\green95\blue191;\red176\green122\blue204;\red204\green122\blue176;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 ;; Definitions for healer agents.\cf0 \
+\pard\pardeftab720
+\cf3 (\cf4 ns\cf0  pucks.agents.red-medic\
+  \cf5 (\cf6 :use\cf0  [pucks globals util vec2D maneuvers]\
+        [pucks.agents active]\
+        [clojure.set]\cf5 )\cf3 )\cf0 \
+  \
+\cf3 (\cf4 defn\cf0  red-medic-proposals [p]\
+  \cf5 (\cf4 let\cf0  \
+    [enemies \cf7 (\cf4 concat\cf0  \cf8 (\cf4 filter\cf0  \cf9 #(\cf4 =\cf0  \cf10 (\cf6 :mobile\cf0  %\cf10 )\cf0  \cf11 true\cf9 )\cf0  \cf9 (\cf4 filter\cf0  \cf6 :blue-grunt\cf0  \cf10 (\cf6 :sensed\cf0  p\cf10 )\cf9 )\cf8 )\cf0 \
+                     \cf8 (\cf4 filter\cf0  \cf9 #(\cf4 =\cf0  \cf10 (\cf6 :mobile\cf0  %\cf10 )\cf0  \cf11 true\cf9 )\cf0  \cf9 (\cf4 filter\cf0  \cf6 :blue-medic\cf0  \cf10 (\cf6 :sensed\cf0  p\cf10 )\cf9 )\cf8 )\cf7 )\cf0 \
+    allies \cf7 (\cf4 concat\cf0  \cf8 (\cf4 filter\cf0  \cf9 #(\cf4 =\cf0  \cf10 (\cf6 :mobile\cf0  %\cf10 )\cf0  \cf11 true\cf9 )\cf0  \cf9 (\cf4 filter\cf0  \cf6 :red-grunt\cf0  \cf10 (\cf6 :sensed\cf0  p\cf10 )\cf9 )\cf8 )\cf0 \
+                   \cf8 (\cf4 filter\cf0  \cf9 #(\cf4 =\cf0  \cf10 (\cf6 :mobile\cf0  %\cf10 )\cf0  \cf11 true\cf9 )\cf0  \cf9 (\cf4 filter\cf0  \cf6 :red-medic\cf0  \cf10 (\cf6 :sensed\cf0  p\cf10 )\cf9 )\cf8 )\cf7 )\cf0 \
+    squad \cf7 (\cf4 filter\cf0  \cf8 #(\cf4 =\cf0  \cf9 (\cf6 :squad-number\cf0  %\cf9 )\cf0  \cf9 (\cf6 :squad-number\cf0  p\cf9 )\cf8 )\cf0  allies\cf7 )\cf0 \
+    allydir \cf7 (\cf4 +v\cf0  \cf8 (\cf4 apply\cf0  avgv \cf9 (\cf4 map\cf0  \cf6 :position\cf0  allies\cf9 )\cf8 )\cf7 )\cf0 \
+    squad-dir \cf7 (\cf4 +v\cf0  \cf8 (\cf4 apply\cf0  avgv \cf9 (\cf4 map\cf0  \cf6 :position\cf0  squad\cf9 )\cf8 )\cf7 )\cf0 \
+    the-dead \cf7 (\cf4 concat\cf0  \cf8 (\cf4 filter\cf0  \cf9 #(\cf4 =\cf0  \cf10 (\cf6 :mobile\cf0  %\cf10 )\cf0  \cf11 false\cf9 )\cf0  \cf9 (\cf4 filter\cf0  \cf6 :red-grunt\cf0  \cf10 (\cf6 :sensed\cf0  p\cf10 )\cf9 )\cf8 )\cf0 \
+                     \cf8 (\cf4 filter\cf0  \cf9 #(\cf4 =\cf0  \cf10 (\cf6 :mobile\cf0  %\cf10 )\cf0  \cf11 false\cf9 )\cf0  \cf9 (\cf4 filter\cf0  \cf6 :blue-grunt\cf0  \cf10 (\cf6 :sensed\cf0  p\cf10 )\cf9 )\cf8 )\cf0 \
+                     \cf8 (\cf4 filter\cf0  \cf9 #(\cf4 =\cf0  \cf10 (\cf6 :mobile\cf0  %\cf10 )\cf0  \cf11 false\cf9 )\cf0  \cf9 (\cf4 filter\cf0  \cf6 :blue-medic\cf0  \cf10 (\cf6 :sensed\cf0  p\cf10 )\cf9 )\cf8 )\cf0 \
+                     \cf8 (\cf4 filter\cf0  \cf9 #(\cf4 =\cf0  \cf10 (\cf6 :mobile\cf0  %\cf10 )\cf0  \cf11 false\cf9 )\cf0  \cf9 (\cf4 filter\cf0  \cf6 :red-medic\cf0  \cf10 (\cf6 :sensed\cf0  p\cf10 )\cf9 )\cf8 )\cf7 )\cf0 \
+    bullets \cf7 (\cf4 filter\cf0  \cf6 :torpedo\cf0  \cf8 (\cf6 :sensed\cf0  p\cf8 )\cf7 )\cf0 \
+    bulletdir \cf7 (\cf4 +v\cf0  \cf8 (\cf4 apply\cf0  avgv \cf9 (\cf4 map\cf0  \cf6 :position\cf0  bullets\cf9 )\cf8 )\cf7 )\cf0 \
+    rich-vents \cf7 (\cf4 filter\cf0  \cf8 #(\cf4 >\cf0  \cf9 (\cf6 :energy\cf0  %\cf9 )\cf0  0.25\cf8 )\cf0  \cf8 (\cf4 filter\cf0  \cf6 :vent\cf0  \cf9 (\cf6 :sensed\cf0  p\cf9 )\cf8 )\cf7 )\cf0 \
+    dry-vents \cf7 (\cf4 filter\cf0  \cf8 #(\cf4 <\cf0  \cf9 (\cf6 :energy\cf0  %\cf9 )\cf0  0.25\cf8 )\cf0  \cf8 (\cf4 filter\cf0  \cf6 :vent\cf0  \cf9 (\cf6 :sensed\cf0  p\cf9 )\cf8 )\cf7 )\cf0 \
+    stones \cf7 (\cf4 filter\cf0  \cf6 :stone\cf0  \cf8 (\cf6 :sensed\cf0  p\cf8 )\cf7 )\cf0 \
+    turrets \cf7 (\cf4 concat\cf0  \cf8 (\cf4 filter\cf0  \cf6 :blue-gunner\cf0  \cf9 (\cf6 :sensed\cf0  p\cf9 )\cf8 )\cf0 \
+                    \cf8 (\cf4 filter\cf0  \cf6 :red-gunner\cf0  \cf9 (\cf6 :sensed\cf0  p\cf9 )\cf8 )\cf7 )\cf0 \
+    stonedir \cf7 (\cf4 +v\cf0  \cf8 (\cf4 apply\cf0  avgv \cf9 (\cf4 map\cf0  \cf6 :position\cf0  stones\cf9 )\cf8 )\cf7 )\cf0 \
+    obstacledir  \cf7 (\cf4 +v\cf0  \cf8 (\cf4 apply\cf0  avgv \cf9 (\cf4 map\cf0  \cf6 :position\cf0  \cf10 (\cf4 concat\cf0  \cf12 (\cf4 concat\cf0  stones turrets\cf12 )\cf0  dry-vents\cf10 )\cf9 )\cf8 )\cf7 )\cf0 ]\
+    \{\
+     \cf6 :acceleration\cf0  \cf7 (\cf4 if\cf0  \cf8 (\cf4 not\cf0  \cf9 (\cf4 empty?\cf0  rich-vents\cf9 )\cf8 )\cf0 \
+                     1\
+                     0.25\cf7 )\cf0 \
+     \cf6 :rotation\cf0  \
+     \cf7 (\cf4 if\cf0  \cf8 (\cf4 not\cf0  \cf9 (\cf4 empty?\cf0  bullets\cf9 )\cf8 )\cf0 \
+       \cf8 (\cf4 vec-avoid\cf0  p bulletdir\cf8 )\cf0 \
+       \cf8 (\cf4 if\cf0  \cf9 (\cf4 and\cf0  \cf10 (\cf4 not\cf0  \cf12 (\cf4 empty?\cf0  squad\cf12 )\cf10 )\cf0 \
+                \cf10 (\cf4 >\cf0  \cf12 (\cf6 :energy\cf0  p\cf12 )\cf0  0.25\cf10 )\cf9 )\cf0 \
+         \cf9 (\cf4 direction->rotation\cf0  \cf10 (\cf4 +v\cf0  squad-dir \cf12 (\cf4 rand-direction\cf12 )\cf10 )\cf9 )\cf0  \cf2 ;to navigate with the pack\cf0 \
+         \cf9 (\cf4 if\cf0  \cf10 (\cf4 and\cf0  \cf12 (\cf4 not\cf0  \cf13 (\cf4 empty?\cf0  rich-vents\cf13 )\cf12 )\cf0  \
+                  \cf12 (\cf4 <\cf0  \cf13 (\cf6 :energy\cf0  p\cf13 )\cf0  0.75\cf12 )\cf10 )\cf0 \
+           \cf10 (\cf4 follow\cf0  \cf12 (\cf4 first\cf0  rich-vents\cf12 )\cf10 )\cf0 \
+           \cf10 (\cf4 if\cf0  \cf12 (\cf4 not\cf0  \cf13 (\cf4 empty?\cf0  the-dead\cf13 )\cf12 )\cf0 \
+             \cf12 (\cf4 avoid\cf0  p \cf13 (\cf4 first\cf0  the-dead\cf13 )\cf12 )\cf0 \
+             \cf12 (\cf4 if\cf0  \cf13 (\cf4 not\cf0  \cf3 (\cf4 empty?\cf0  enemies\cf3 )\cf13 )\cf0 \
+               \cf13 (\cf4 avoid\cf0  p \cf3 (\cf4 first\cf0  enemies\cf3 )\cf13 )\cf0 \
+               \cf13 (\cf4 if\cf0  \cf3 (\cf4 not\cf0  \cf5 (\cf4 empty?\cf0  \cf7 (\cf4 concat\cf0  stones turrets\cf7 )\cf5 )\cf3 )\cf0 \
+                 \cf3 (\cf4 vec-avoid\cf0  p obstacledir\cf3 )\cf0  \cf2 ;to avoid stones                             \cf0 \
+                 \cf3 (\cf4 direction->rotation\cf0  \cf5 (\cf6 :velocity\cf0  p\cf5 )\cf3 )\cf13 )\cf12 )\cf10 )\cf9 )\cf8 )\cf7 )\cf0 \
+     \cf6 :transfer\cf0  \cf7 (\cf4 into\cf0  [] \cf8 (\cf4 for\cf0  [recipient \cf9 (\cf4 filter\cf0  \cf10 #(\cf4 <\cf0  \cf12 (\cf6 :energy\cf0  %\cf12 )\cf0  0.5\cf10 )\cf0  allies\cf9 )\cf0 ]\
+               \{\cf6 :self\cf0  \cf9 (\cf6 :id\cf0  p\cf9 )\cf0 \
+                \cf6 :other\cf0  \cf9 (\cf6 :id\cf0  recipient\cf9 )\cf0 \
+                \cf6 :bid\cf0  \{\cf6 :energy\cf0  0.01\}\
+                \cf6 :ask\cf0  \{\}\}\cf8 )\cf7 )\cf0 \}\cf5 )\cf3 )\cf0 \
+\
+\cf3 (\cf4 defn\cf0  red-medic [squad-num]\
+  \cf5 (\cf4 merge\cf0  \cf7 (\cf4 active\cf7 )\cf0 \
+         \{\cf6 :red-medic\cf0  \cf11 true\cf0 \
+          \cf6 :proposal-function\cf0  red-medic-proposals\
+          \cf6 :color\cf0  [\cf7 (\cf4 -\cf0  255 \cf8 (\cf4 *\cf0  squad-num 50\cf8 )\cf7 )\cf0  0 0]\
+          \cf6 :eye-color\cf0  [0 255 0]\
+          \cf6 :squad-number\cf0  squad-num\}\cf5 )\cf3 )}

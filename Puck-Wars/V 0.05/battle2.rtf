@@ -1,0 +1,79 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1343\cocoasubrtf160
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red63\green127\blue95;\red204\green122\blue122;\red127\green0\blue85;
+\red204\green176\blue122;\red42\green0\blue255;\red122\green204\blue122;\red122\green204\blue176;\red122\green176\blue204;
+\red122\green122\blue204;\red63\green95\blue191;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 ;a large pucks battlefield\cf0 \
+\pard\pardeftab720
+\cf3 (\cf4 ns\cf0  battle2  \
+  \cf5 (\cf6 :use\cf0  [pucks core globals]\
+        [pucks.agents stone vent zapper red-grunt red-gunner blue-grunt blue-gunner nursery]\cf5 )\cf3 )\cf0 \
+\cf3 (\cf4 def\cf0  size 1600\cf3 )\cf0 \
+\cf3 (\cf4 def\cf0  centered \cf5 (\cf4 /\cf0  size 2\cf5 )\cf3 )\cf0 \
+\cf3 (\cf4 def\cf0  red-x 150\cf3 )\cf0 \
+\cf3 (\cf4 def\cf0  blue-x \cf5 (\cf4 -\cf0  size 150\cf5 )\cf3 )\cf0 \
+\cf3 (\cf4 defn\cf0  agents []\
+  \cf5 (\cf4 concat\cf0  \
+    \cf2 ;creates the stones that provide cover \cf0 \
+    \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  20 \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 +\cf0  % 20\cf10 )\cf0  centered\cf9 )\cf8 )\cf0 ]\
+      \cf8 (\cf4 merge\cf0  \cf9 (\cf4 stone\cf9 )\cf0  \{\cf6 :position\cf0  [\cf9 (\cf4 -\cf0  size 300\cf9 )\cf0  y]\}\cf8 )\cf7 )\cf0 \
+    \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  20 \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 -\cf0  % 20\cf10 )\cf0  centered\cf9 )\cf8 )\cf0 ]\
+      \cf8 (\cf4 merge\cf0  \cf9 (\cf4 stone\cf9 )\cf0  \{\cf6 :position\cf0  [\cf9 (\cf4 -\cf0  size 300\cf9 )\cf0  y]\}\cf8 )\cf7 )\cf0 \
+   \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  20 \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 +\cf0  % 20\cf10 )\cf0  centered\cf9 )\cf8 )\cf0 ]\
+      \cf8 (\cf4 merge\cf0  \cf9 (\cf4 stone\cf9 )\cf0  \{\cf6 :position\cf0  [300 y]\}\cf8 )\cf7 )\cf0 \
+    \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  20 \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 -\cf0  % 20\cf10 )\cf0  centered\cf9 )\cf8 )\cf0 ]\
+      \cf8 (\cf4 merge\cf0  \cf9 (\cf4 stone\cf9 )\cf0  \{\cf6 :position\cf0  [300 y]\}\cf8 )\cf7 )\cf0 \
+    \
+    \cf2 ;creates the stones that fence off the back of the world so that pucks can't be outflanked\cf0 \
+    \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  \cf9 (\cf4 /\cf0  size 20\cf9 )\cf0  \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 +\cf0  % 20\cf10 )\cf0  0\cf9 )\cf8 )\cf0 ]\
+      \cf8 (\cf4 merge\cf0  \cf9 (\cf4 stone\cf9 )\cf0  \{\cf6 :position\cf0  [\cf9 (\cf4 -\cf0  size 25\cf9 )\cf0  y]\}\cf8 )\cf7 )\cf0 \
+    \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  \cf9 (\cf4 /\cf0  size 20\cf9 )\cf0  \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 +\cf0  % 20\cf10 )\cf0  0\cf9 )\cf8 )\cf0 ]\
+      \cf8 (\cf4 merge\cf0  \cf9 (\cf4 stone\cf9 )\cf0  \{\cf6 :position\cf0  [25 y]\}\cf8 )\cf7 )\cf0 \
+    \
+    \cf2 ;creates the vent on the red side \cf0 \
+   [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [150 centered]\}\cf7 )\cf0 ]\
+  \
+   \
+   \cf2 ;creates the vent on the blue side \cf0 \
+   [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [\cf8 (\cf4 -\cf0  size 150\cf8 )\cf0  centered]\}\cf7 )\cf0 ]\
+\
+   \
+   \cf2 ;creates the vents in the middle of the field\cf0 \
+    [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [\cf8 (\cf4 +\cf0  centered 250\cf8 )\cf0  \cf8 (\cf4 +\cf0  centered 250\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+    [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [\cf8 (\cf4 -\cf0  centered 250\cf8 )\cf0  \cf8 (\cf4 +\cf0  centered 250\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+    [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [\cf8 (\cf4 +\cf0  centered 250\cf8 )\cf0  \cf8 (\cf4 -\cf0  centered 250\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+    [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [\cf8 (\cf4 -\cf0  centered 250\cf8 )\cf0  \cf8 (\cf4 -\cf0  centered 250\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+    [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [centered 150]\}\cf7 )\cf0 ]\
+    [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [centered centered]\}\cf7 )\cf0 ]\
+    [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 vent\cf8 )\cf0  \{\cf6 :position\cf0  [centered \cf8 (\cf4 -\cf0  size 150\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+   \
+    \cf2 ;creates the red faction\cf0 \
+   \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  10 \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 +\cf0  % 30\cf10 )\cf0  centered\cf9 )\cf8 )\cf0 ]\
+     \cf8 (\cf4 merge\cf0  \cf9 (\cf4 red-grunt\cf9 )\cf0  \{\cf6 :position\cf0  [red-x y]\}\cf8 )\cf7 )\cf0 \
+    \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  10 \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 -\cf0  % 30\cf10 )\cf0  centered\cf9 )\cf8 )\cf0 ]\
+     \cf8 (\cf4 merge\cf0  \cf9 (\cf4 red-grunt\cf9 )\cf0  \{\cf6 :position\cf0  [red-x y]\}\cf8 )\cf7 )\cf0 \
+   [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 nursery\cf0  red-gunner\cf8 )\cf0  \{\cf6 :position\cf0  [150 \cf8 (\cf4 +\cf0  centered 500\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+   [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 nursery\cf0  red-gunner\cf8 )\cf0  \{\cf6 :position\cf0  [150 \cf8 (\cf4 -\cf0  centered 500\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+   \
+   \cf2 ;creates the blue faction \cf0 \
+   \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  10 \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 +\cf0  % 30\cf10 )\cf0  centered\cf9 )\cf8 )\cf0 ]\
+     \cf8 (\cf4 merge\cf0  \cf9 (\cf4 blue-grunt\cf9 )\cf0  \{\cf6 :position\cf0  [blue-x y]\}\cf8 )\cf7 )\cf0 \
+   \cf7 (\cf4 for\cf0  [y \cf8 (\cf4 take\cf0  10 \cf9 (\cf4 iterate\cf0  \cf10 #(\cf4 -\cf0  % 30\cf10 )\cf0  centered\cf9 )\cf8 )\cf0 ]\
+     \cf8 (\cf4 merge\cf0  \cf9 (\cf4 blue-grunt\cf9 )\cf0  \{\cf6 :position\cf0  [blue-x y]\}\cf8 )\cf7 )\cf0 \
+   [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 nursery\cf0  blue-gunner\cf8 )\cf0  \{\cf6 :position\cf0  [\cf8 (\cf4 -\cf0  size 150\cf8 )\cf0  \cf8 (\cf4 +\cf0  centered 500\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+   [\cf7 (\cf4 merge\cf0  \cf8 (\cf4 nursery\cf0  blue-gunner\cf8 )\cf0 \{\cf6 :position\cf0  [\cf8 (\cf4 -\cf0  size 150\cf8 )\cf0  \cf8 (\cf4 -\cf0  centered 500\cf8 )\cf0 ]\}\cf7 )\cf0 ]\
+   \cf5 )\cf3 )\cf0 \
+   \
+\
+\cf3 (\cf4 defn\cf0  settings []\
+  \{\
+   \cf6 :screen-size\cf0  size\
+   \cf6 :scale\cf0  0.5\
+   \cf6 :single-thread-mode\cf0  \cf11 false\cf0 \
+   \}\cf3 )\cf0 \
+\
+\cf3 (\cf4 run-pucks\cf0  \cf5 (\cf4 agents\cf5 )\cf0  \cf5 (\cf4 settings\cf5 )\cf3 )}

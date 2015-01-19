@@ -1,0 +1,1 @@
+All of these Unity games were built in my first semester of programming, under the tutelage of game development Professor Ira Fay. The first three were projects of his design. However, the final project: Quoridor was a concept I designed with my partner for the assignment —as an adaption of the board game of the same name. 

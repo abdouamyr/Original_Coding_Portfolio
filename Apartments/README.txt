@@ -1,0 +1,5 @@
+Apartments is an experiment in world building, a dynamic camera, and basic Artificial Intelligence. The controls and function of the game are relatively simple. The camera can be controlled either by the WASD keys or the on screen buttons. It can also be zoomed in and out with the plus and minus keys. 
+
+The elevator can be controlled either by typing in a number or clicking a button. The shift key sends the elevator off to a new floor and the alt key unloads the current occupants onto the present floor. 
+
+The occupants of each floor have happiness represented by their current color. They become less happy when not in a conversation. The main objective is to make as many occupants of the apartments happy by moving them to a new floor. Any unhappy occupant will board the elevator when it arrives at their floor.  

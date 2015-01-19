@@ -1,0 +1,76 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1343\cocoasubrtf140
+{\fonttbl\f0\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red204\green122\blue122;\red127\green0\blue85;\red204\green176\blue122;
+\red42\green0\blue255;\red122\green204\blue122;\red122\green204\blue176;\red122\green176\blue204;\red122\green122\blue204;
+\red176\green122\blue204;\red63\green127\blue95;\red204\green122\blue176;\red63\green95\blue191;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs22 \cf2 (\cf3 ns\cf0  pucks.agents.user  \
+  \cf4 (\cf5 :use\cf0  [pucks globals util vec2D]\
+        pucks.agents.active\
+        clojure.set\cf4 )\cf2 )\cf0 \
+\cf2 (\cf3 defn\cf0  user-proposals [p]\
+  \cf4 (\cf3 let\cf0  [vent_sensed \cf6 (\cf3 filter\cf0  \cf5 :vent\cf0  \cf7 (\cf5 :sensed\cf0  p\cf7 )\cf6 )\cf0 \
+        beacon_sensed \cf6 (\cf3 into\cf0  #\{\} \cf7 (\cf3 map\cf0  \cf5 :id\cf0  \cf8 (\cf3 filter\cf0  \cf5 :beacon\cf0  \cf9 (\cf5 :sensed\cf0  p\cf9 )\cf8 )\cf7 )\cf6 )\cf0 \
+        beacon_sensed_relativepos \cf6 (\cf3 filter\cf0  \cf5 :beacon\cf0  \cf7 (\cf5 :sensed\cf0  p\cf7 )\cf6 )\cf0 \
+        zapper_sensed \cf6 (\cf3 filter\cf0  \cf5 :zapper\cf0  \cf7 (\cf5 :sensed\cf0  p\cf7 )\cf6 )\cf0 \
+        stone_sensed \cf6 (\cf3 filter\cf0  \cf5 :stone\cf0  \cf7 (\cf5 :sensed\cf0  p\cf7 )\cf6 )\cf0 \
+        seen_zap \cf6 (\cf3 not\cf0  \cf7 (\cf3 empty?\cf0  \cf8 (\cf3 filter\cf0  \cf5 :zapper_pos\cf0  \cf9 (\cf5 :memory\cf0  p\cf9 )\cf8 )\cf7 )\cf6 )\cf0 \
+        zap_pos \cf6 (\cf5 :zapper_pos\cf0  \cf7 (\cf5 :memory\cf0  p\cf7 )\cf6 )\cf0 \
+        dangerous_ids \cf6 (\cf3 intersection\cf0  zap_pos beacon_sensed\cf6 )\cf0 ]\
+\
+  \{\cf5 :rotation\cf0  \cf6 (\cf3 if\cf0  seen_zap\
+               \cf7 (\cf3 if\cf0  \cf8 (\cf3 not\cf9 (\cf3 empty?\cf0  dangerous_ids\cf9 )\cf8 )\cf0 \
+                 \cf8 (\cf3 let\cf0  [zapdir \cf9 (\cf3 avgv\cf0  \cf10 (\cf3 map\cf0  relativize-position dangerous_ids\cf10 )\cf9 )\cf0 ]\
+\pard\pardeftab720
+\cf11 ;                 (let [zapdir ((some #(when (= (first dangerous_ids) (:id %)) :position %) beacon_sensed_relativepos))]  ;;line that I changed\cf0 \
+                   \cf9 (\cf3 +\cf0  pi \cf10 (\cf3 direction->rotation\cf0  zapdir\cf10 )\cf9 )\cf8 )\cf0   \
+                 \
+                 \
+                 \
+                 \
+                 \cf8 (\cf3 if\cf0  \cf9 (\cf3 not\cf0  \cf10 (\cf3 empty?\cf0  zapper_sensed\cf10 )\cf9 )\cf0 \
+                   \cf9 (\cf3 let\cf0  [zapdir \cf10 (\cf5 :position\cf0  \cf12 (\cf3 first\cf0  \cf2 (\cf3 filter\cf0  \cf5 :zapper\cf0  \cf4 (\cf5 :sensed\cf0  p\cf4 )\cf2 )\cf12 )\cf10 )\cf0 ]\
+                     \cf10 (\cf3 +\cf0  pi \cf12 (\cf3 direction->rotation\cf0  zapdir\cf12 )\cf10 )\cf9 )\cf0 \
+                   \cf9 (\cf3 if\cf0  \cf10 (\cf3 not\cf0  \cf12 (\cf3 empty?\cf0  stone_sensed\cf12 )\cf10 )\cf0 \
+                     \cf10 (\cf3 let\cf0  [stonedir \cf12 (\cf5 :position\cf0  \cf2 (\cf3 first\cf0  \cf4 (\cf3 filter\cf0  \cf5 :stone\cf0  \cf6 (\cf5 :sensed\cf0  p\cf6 )\cf4 )\cf2 )\cf12 )\cf0 ]\
+                       \cf12 (\cf3 +\cf0  pi \cf2 (\cf3 direction->rotation\cf0  stonedir\cf2 )\cf12 )\cf10 )\cf0  \
+                     \cf10 (\cf3 if\cf0  \cf12 (\cf3 not\cf0  \cf2 (\cf3 empty?\cf0  \cf4 (\cf5 :vent_pos\cf0  p\cf4 )\cf2 )\cf12 )\cf0 \
+\cf11 ;                 (if (or (= (first beacon_sensed) (first (:vent_pos p)))               ; this part is to make sure that when it is stuck around a vent (with \cf0 \
+\cf11 ;                         (= (first (next beacon_sensed)) (first (next (:vent_pos p))))\cf0 \
+\cf11 ;                         (= (first beacon_sensed) (first (next (:vent_pos p))))\cf0 \
+\cf11 ;                         (= (first (next beacon_sensed)) (first (:vent_pos p))))  \cf0 \
+                   \cf11 ;(direction->rotation (:velocity p))\cf0 \
+                   \cf12 (\cf3 direction->rotation\cf0  \cf2 (\cf5 :vent_pos\cf0  p\cf2 )\cf12 )\cf0 \
+                   \cf12 (\cf3 direction->rotation\cf0  \cf2 (\cf5 :velocity\cf0  p\cf2 )\cf12 )\cf10 )\cf9 )\cf8 )\cf7 )\cf6 )\cf0 \
+\
+   \cf5 :acceleration\cf0  \cf6 (\cf3 if\cf0  \cf7 (\cf3 empty?\cf0  \cf8 (\cf3 filter\cf0  \cf5 :zapper\cf0  \cf9 (\cf5 :sensed\cf0  p\cf9 )\cf8 )\cf7 )\cf0 \
+                   1\
+                  \cf7 (\cf3 *\cf0  0.25 \cf8 (\cf3 -\cf0  \cf9 (\cf3 length\cf0  \cf10 (\cf5 :velocity\cf0  p\cf10 )\cf9 )\cf8 )\cf7 )\cf6 )\cf0 \
+   \cf5 :memory\cf0  \cf6 (\cf3 if\cf0  \cf7 (\cf3 or\cf0  \cf8 (\cf3 not\cf0  \cf9 (\cf3 empty?\cf0  vent_sensed\cf9 )\cf8 )\cf0 \
+                   \cf8 (\cf3 not\cf0  \cf9 (\cf3 empty?\cf0  stone_sensed\cf9 )\cf8 )\cf0 \
+                   \cf8 (\cf3 not\cf0  \cf9 (\cf3 empty?\cf0  zapper_sensed\cf9 )\cf8 )\cf7 )\cf0 \
+             \cf7 (\cf3 if\cf0  \cf8 (\cf3 not\cf0  \cf9 (\cf3 empty?\cf0  vent_sensed\cf9 )\cf8 )\cf0 \
+               \{\cf5 :vent_pos\cf0  \cf8 (\cf3 filter\cf0  \cf5 :beacon\cf0  \cf9 (\cf5 :sensed\cf0  p\cf9 )\cf8 )\cf0 \}\
+               \cf8 (\cf3 if\cf0  \cf9 (\cf3 not\cf0  \cf10 (\cf3 empty?\cf0  stone_sensed\cf10 )\cf9 )\cf0 \
+                 \{\cf5 :stone_pos\cf0  \cf9 (\cf3 filter\cf0  \cf5 :beacon\cf0  \cf10 (\cf5 :sensed\cf0  p\cf10 )\cf9 )\cf0 \}\
+                 \cf9 (\cf3 if\cf0  \cf10 (\cf3 not\cf0  \cf12 (\cf3 empty?\cf0  zapper_sensed\cf12 )\cf10 )\cf0 \
+                   \{\cf5 :zapper_pos\cf0  \cf10 (\cf3 into\cf0  #\{\}\cf12 (\cf3 concat\cf0  \cf2 (\cf5 :zapper_pos\cf0  \cf4 (\cf5 :memory\cf0  p\cf4 )\cf2 )\cf0  \cf2 (\cf3 map\cf0  \cf5 :id\cf0  \cf4 (\cf3 filter\cf0  \cf5 :beacon\cf0  \cf6 (\cf5 :sensed\cf0  p\cf6 )\cf4 )\cf2 )\cf12 )\cf10 )\cf0 \}\
+                   \{\}\cf9 )\cf8 )\cf7 )\cf6 )\cf0 \}\cf4 )\cf2 )\cf0    \cf11 ;;; Question: Does this replace the things in the memory or do all three get stored? \cf0 \
+            \
+\
+\
+\pard\pardeftab720
+\cf2 (\cf3 defn\cf0  user []\
+ \cf4 (\cf3 merge\cf0  \cf6 (\cf3 active\cf6 )\cf0 \
+         \{\cf5 :user\cf0  \cf13 true\cf0 \
+          \cf5 :color\cf0  [150 0 150]\
+          \cf5 :eye-color\cf0  [255 255 255]\
+         \cf5 :proposal-function\cf0  user-proposals\
+         \cf5 :memory\cf0  \{\cf5 :zapper_pos\cf0  \{\}\
+                  \cf5 :stone_pos\cf0  \{\}\
+                  \cf5 :vent_pos\cf0  \{\}\}\
+          \cf11 ;:mobile false\cf0 \
+          \}\cf4 )\cf2 )}

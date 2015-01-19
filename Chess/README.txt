@@ -1,0 +1,1 @@
+This is the standard game of chess. It’s a demonstration of 2d game making with the Unity engine, a basic search algorithm, and the interaction of many hierarchal classes. The controls are all done through clicking. Green squares indicate moves and red squares indicate pieces that can be taken. If the king’s square is red, this indicates a check. 

@@ -1,0 +1,180 @@
+* {
+	font-family: courier;
+}
+
+a {
+	text-decoration: none;
+	color: #7094FF;
+}
+
+a:hover {
+	color: #0040FF;
+}
+
+#Body {
+	height: 600px;
+	width: 100%;
+	color: white;
+	background-color: black;
+}
+
+#Footer {
+	width: 100%;
+	height: 20%;
+	float: left;
+	text-align: center;
+}
+
+#Header {
+	width: 100%;
+	color: white;
+	height: 12em;
+	border-bottom: 2px solid white;
+	background-color: black;
+}
+
+#title {
+	margin-left: 1em;
+	float: left;
+	width: 7em;
+}
+
+.circle {
+	border-radius: 100%;
+	background-color: white;
+	width: 100px;
+	height: 70px;
+	text-align: center;
+	padding-top: 20px;
+	float: left;
+	margin-right: 3em;
+	margin-left: .5em;
+	margin-top: 1em;
+}
+
+.circle p {
+	position: absolute;
+	left: 3.75em;
+	top: 7.75em;
+}
+
+.circle a p {
+	color: white;
+}
+
+.circle p:hover {
+	color:red;
+}
+.titleLink {
+	font-size: 2.75em;
+	float: inherit;
+	border-left: 1px solid white;
+	text-align: center;
+	padding-top: 60px;
+	margin-right: 1px;
+	height: 3em;
+	width: 6.5em;
+}
+#horizontalBorderLeft {
+	height: 100%;
+	width: 10%;
+	background: linear-gradient(to right, #7A7A7A , black);
+	float: left;
+}
+
+#horizontalBorderRight {
+	height: 100%;
+	width: 10%;
+	background: linear-gradient(to right, black , #7A7A7A);
+	float: right;
+}
+
+#main {
+	width: 80%;
+	height: 80%;
+	float: left;
+	text-align: center;
+}
+
+#mainText {
+	height: 90%;
+	width: 100%;
+}
+#main p{
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
+.footerBox {
+	width: 29.65em;
+	height: 9.5em;
+	background-color: black;
+	border-left: 2px solid white;
+	border-right: 2px solid white;
+	border-top: 1px solid white;
+	float: left;
+}
+
+.indent {
+	padding-left: 10em;
+	padding-right: 10em;
+}
+
+.characterBox {
+	height: 100%;
+	float: left;
+	border: 1px solid white;
+	width: 33.1%;
+	text-align: center;
+}
+
+.characterBox:hover {
+	background-color: #141414;
+}
+
+.imgBox {
+	border: 2px solid white;
+	margin: 1em;
+	height: 200px;
+	width: 400px;
+	float: left;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	text-align: center;
+}
+
+.imgBox:hover {
+	background-color: #141414;
+}
+.mainImage { 
+	padding-top: 3em;
+	text-align: center;
+	width: 90%;
+}
+
+.mainImage p {
+	text-align: justify; 
+}
+
+#topBoxLinks {
+	margin-left: 8.25em;
+	float: left;
+	width: 80em;
+	height: 15em;
+	position: absolute;
+}
+
+#box1 {}
+#box2 {}
+#box3 {}
+#box4 {}
+#box5 {}
+#box6 {}
+.screenshot {}
+.conceptArt {}
+canvas {
+	text-align: center;
+	position: absolute;
+	left:20em;
+	top:12.2em;
+}
